@@ -23,8 +23,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ZaloApiServiceImpl implements ZaloApiService {
-    @Value("${zalo.client-id}")
-    private String clientId;
+
     @Value("${zalo.client-secret}")
     private String clientSecret;
     @Value("${zalo.code-verify}")

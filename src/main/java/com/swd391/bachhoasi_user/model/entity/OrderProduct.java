@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "OrderProduct")
 public class OrderProduct {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private BigDecimal id;
     @ManyToOne(targetEntity = Order.class, fetch = FetchType.LAZY)

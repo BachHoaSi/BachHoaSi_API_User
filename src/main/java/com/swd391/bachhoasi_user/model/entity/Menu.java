@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Menu")
 public class Menu {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private BigDecimal id;
     @ManyToOne(targetEntity = StoreLevel.class, optional = false, fetch = FetchType.EAGER)

@@ -15,9 +15,10 @@ public class OauthServiceImpl implements OauthService{
     private final ZaloApiService zaloApiService;
     private final StoreRepository storeRepository;
     @Override
-    public LoginResponse oauthLogin(String code, String state, String codeChallenge) {
-        String accessToken = zaloApiService.getAccessToken(codeChallenge);
+    public LoginResponse oauthLogin(String code) {
+        String accessToken = zaloApiService.getAccessToken(code);
         ZaloUserResponse zaloUser = zaloApiService.getZaloUserInformation(accessToken);
+        
         return null;
     }
     

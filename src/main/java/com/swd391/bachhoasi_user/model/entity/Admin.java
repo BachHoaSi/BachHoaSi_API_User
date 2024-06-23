@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Admin")
 public class Admin {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private BigDecimal id;
     @Column(name = "UserName", nullable = false, columnDefinition = "varchar", length = 32)

@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "StoreLevel")
 public class StoreLevel {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private BigDecimal id;
     @Column(name = "Description", columnDefinition = "text")

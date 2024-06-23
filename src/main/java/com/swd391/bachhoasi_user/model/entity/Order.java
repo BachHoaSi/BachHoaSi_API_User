@@ -37,7 +37,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private BigDecimal id;
     @Column(name = "SubTotal")

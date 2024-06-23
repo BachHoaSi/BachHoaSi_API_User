@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "StoreType")
 public class StoreType {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private BigDecimal id;
     @Column(name = "Name")

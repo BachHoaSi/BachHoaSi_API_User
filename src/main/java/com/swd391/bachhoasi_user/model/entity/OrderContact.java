@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "OrderContact")
 public class OrderContact {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private BigDecimal id;
     @OneToOne(targetEntity = Order.class, fetch = FetchType.LAZY)

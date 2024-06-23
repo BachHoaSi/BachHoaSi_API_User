@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Shipper")
 public class Shipper {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private BigDecimal id;
     @Column(name = "Name", columnDefinition = "varchar", length = 48)

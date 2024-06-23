@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Cart")
 public class Cart {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private BigDecimal id;
     @OneToOne(targetEntity = Store.class, fetch = FetchType.LAZY)

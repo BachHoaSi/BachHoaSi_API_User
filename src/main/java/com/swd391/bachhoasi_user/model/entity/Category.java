@@ -2,15 +2,9 @@ package com.swd391.bachhoasi_user.model.entity;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private BigDecimal id;
     @Column(name = "Name", columnDefinition = "varchar", length = 20)
@@ -44,4 +38,6 @@ public class Category {
     private Admin updatedBy;
     @Column(name = "Status", columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean status;
+    @OneToMany(targetEntity = Product.class, fetch = FetchType.LAZY)
+    private List<Product> products;
 }

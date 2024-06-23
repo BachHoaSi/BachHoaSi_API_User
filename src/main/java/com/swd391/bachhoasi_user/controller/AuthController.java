@@ -17,11 +17,9 @@ import com.swd391.bachhoasi_user.service.OauthService;
 @RequiredArgsConstructor
 public class AuthController {
     private final OauthService oauthService;
-    @GetMapping("/zalo/callback")
+    @GetMapping("/zalo/login")
     public ResponseEntity<ResponseObject> zaloOAuthCallbackHandler(
-        @RequestParam(name = "code") String code,
-        @RequestParam("state") String state,
-        @RequestParam("code_challenge") String codeChallenge
+        @RequestParam(name = "code") String code
     ){
         return null;
     }
