@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/product")
-@RequiredArgsConstructor
+//@RestController
+//@RequestMapping("/product")
+//@RequiredArgsConstructor
 public class ProductController {
 
-
-    @GetMapping("/products")
-    public ResponseEntity<ResponseObject> getProducts() {
-        return null;
-    }
+//
+//    @GetMapping("/products")
+//    public ResponseEntity<ResponseObject> getProducts() {
+//        return null;
+//    }
 
 }

@@ -7,9 +7,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/store")
@@ -35,8 +39,9 @@ public class StoreController {
     }
 
     @PutMapping("/update-store")
-    public ResponseEntity<ResponseObject> updateStore(@RequestBody @Valid StoreUpdateRequest storeUpdateRequest) {
-
+    public ResponseEntity<ResponseObject> updateStore(@RequestBody @Valid StoreUpdateRequest storeUpdateRequest, BindingResult bindingResult) {
+        ResponseEntity<ResponseObject> errors = CartController.getResponseObjectResponseEntity(bindingResult);
+        if (errors != null) return errors;
         var storeUpdated = storeService.updateStore(storeUpdateRequest);
         return ResponseEntity.ok(
                 ResponseObject.builder()

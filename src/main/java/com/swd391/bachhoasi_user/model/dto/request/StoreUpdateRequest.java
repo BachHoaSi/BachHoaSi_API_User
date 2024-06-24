@@ -2,6 +2,8 @@ package com.swd391.bachhoasi_user.model.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,20 +17,17 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @Data
 @Builder
-@Validated
 public class StoreUpdateRequest {
 
-    @NotEmpty(message = "Store id should not be null or empty")
+    @NotNull(message = "Store id should not be null")
     private BigDecimal id;
 
-    //@NotEmpty(message = "Product name should not be null or empty")
     private String name;
 
-    //@NotEmpty(message = "Phone number should not be empty")
+    @Pattern(regexp = "(84|0[35789])([0-9]{8})\\b", message = "Invalid phone number")
     @JsonProperty("phone-number")
     private String phoneNumber;
 
-    //@NotEmpty(message = "Address should not be empty")
     private String location;
 
 }

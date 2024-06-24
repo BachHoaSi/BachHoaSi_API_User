@@ -1,29 +1,79 @@
 package com.swd391.bachhoasi_user.controller;
 
+import com.swd391.bachhoasi_user.model.constant.OrderStatus;
+import com.swd391.bachhoasi_user.model.dto.request.OrderRequest;
 import com.swd391.bachhoasi_user.model.dto.response.ResponseObject;
+import com.swd391.bachhoasi_user.service.OrderService;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.swd391.bachhoasi_user.controller.CartController.getResponseObjectResponseEntity;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/order")
 public class OrderController {
 
+    private final OrderService orderService;
+
     @GetMapping("/orders")
-    public ResponseEntity<ResponseObject> getOrders() {
-        return null;
+    public ResponseEntity<ResponseObject> getOrders(
+            @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
+            @RequestParam(required = true, name = "store-id") BigDecimal storeId,
+            @RequestParam(required = true, name = "order-status") String orderStatus) {
+        var data = orderService.getAllOrders(storeId, OrderStatus.valueOf(orderStatus), pagination);
+        var responseObject = ResponseObject.builder()
+                .code("ORDER_GET_SUCCESS")
+                .message("Get order successfully")
+                .status(HttpStatus.OK)
+                .isSuccess(true)
+                .data(data)
+                .build();
+        return ResponseEntity.ok().body(responseObject);
     }
 
     @GetMapping("/order-details")
-    public ResponseEntity<ResponseObject> getOrderDetails() {
-        return null;
+    public ResponseEntity<ResponseObject> getOrderDetails(
+            @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
+            @RequestParam(required = true, name = "order-id") BigDecimal orderId
+    ) {
+        var data = orderService.getOrderDetails(orderId, pagination);
+        var responseObject = ResponseObject.builder()
+                .code("ORDER_DETAILS_GET_SUCCESS")
+                .message("Get order successfully")
+                .status(HttpStatus.OK)
+                .isSuccess(true)
+                .data(data)
+                .build();
+        return ResponseEntity.ok().body(responseObject);
     }
 
     @PostMapping
-    public ResponseEntity<ResponseObject> addOrder() {
-        return null;
+    public ResponseEntity<ResponseObject> addOrder(@RequestBody @Valid OrderRequest orderRequest, BindingResult bindingResult) {
+        var response = getResponseObjectResponseEntity(bindingResult);
+        if (response != null){ return response;}
+        var data = orderService.placeOrder(orderRequest);
+        var responseObject = ResponseObject.builder()
+                .code("ORDER_ADD_SUCCESS")
+                .message("Add order successfully")
+                .status(HttpStatus.OK)
+                .isSuccess(true)
+                .data(data)
+                .build();
+        return ResponseEntity.ok().body(responseObject);
+
     }
 
 

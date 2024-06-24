@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SourceType;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -17,17 +19,20 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Data;
-@Entity(name = "ProductMenu")
+
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name = "ProductMenu")
 public class ProductMenu implements Serializable {
     @EmbeddedId
     private ProductMenuId composeId;
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "Id",columnDefinition = "BIGSERIAL", nullable = false, unique = true)
+    @Column(name = "Id",columnDefinition = "BIGINT", nullable = false, unique = true)
     private BigDecimal id;
     @Column(name = "Price")
-    private BigDecimal basePrice;
+    private BigDecimal price;
     @Column(name = "CreatedDate")
     @UpdateTimestamp(source = SourceType.DB)
     private Date createdDate;

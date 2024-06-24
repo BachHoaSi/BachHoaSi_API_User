@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 public class StoreServiceImpl implements StoreService {
 
 
-    private StoreRepository storeRepository;
+    private final StoreRepository storeRepository;
 
     @Override
     public StoreDetailsResponse getStoreById(BigDecimal id) {
