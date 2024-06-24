@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @Repository
-public interface StoreTypeRepository extends BaseBachHoaSiRepository<StoreTypeRepository, BigDecimal> {
+public interface StoreTypeRepository extends BaseBachHoaSiRepository<StoreType, BigDecimal> {
     Page<StoreType> findByName(String name, Pageable pageable);
     Optional<StoreType> findByName(String name);
     Page<StoreType> findByDescription(String description, Pageable pageable);

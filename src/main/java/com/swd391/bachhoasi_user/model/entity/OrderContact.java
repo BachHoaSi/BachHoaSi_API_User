@@ -1,5 +1,6 @@
 package com.swd391.bachhoasi_user.model.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 
@@ -21,14 +22,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "OrderContact")
-public class OrderContact {
+public class OrderContact implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "Id")
+    @Column(name = "Id", columnDefinition = "BIGINT")
     private BigDecimal id;
-    @OneToOne(targetEntity = Order.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "OrderId")
-    private Order order;
     @Column(name = "PhoneNumber", columnDefinition = "varchar", length = 12)
     private String phoneNumber;
     @Column(name = "BuildingNumber", columnDefinition = "varchar", length = 12)
