@@ -32,7 +32,7 @@ public class OrderProductMenu implements Serializable {
     private Order order;
     @Column(name = "Quantity")
     private Integer quantity;
-    @ManyToOne(targetEntity = ProductMenu.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "ProductMenuId", referencedColumnName = "id",columnDefinition = "bigint", nullable = false)
+    @ManyToOne(targetEntity = ProductMenu.class, fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
+    @JoinColumn(name = "ProductMenuId", referencedColumnName = "id", nullable = false)
     private ProductMenu product;
 }
