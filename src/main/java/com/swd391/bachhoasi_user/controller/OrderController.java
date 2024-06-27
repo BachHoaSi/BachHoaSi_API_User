@@ -1,6 +1,7 @@
 package com.swd391.bachhoasi_user.controller;
 
 import com.swd391.bachhoasi_user.model.constant.OrderStatus;
+import com.swd391.bachhoasi_user.model.dto.request.FeedbackRequest;
 import com.swd391.bachhoasi_user.model.dto.request.OrderRequest;
 import com.swd391.bachhoasi_user.model.dto.response.ResponseObject;
 import com.swd391.bachhoasi_user.service.OrderService;
@@ -73,7 +74,36 @@ public class OrderController {
                 .data(data)
                 .build();
         return ResponseEntity.ok().body(responseObject);
+    }
 
+    @PostMapping("/feedback")
+    public ResponseEntity<ResponseObject> addFeedback(@RequestBody @Valid FeedbackRequest feedbackRequest, BindingResult bindingResult) {
+        var response = getResponseObjectResponseEntity(bindingResult);
+        if (response != null){ return response;}
+        var data = orderService.addFeedback(feedbackRequest);
+        var responseObject = ResponseObject.builder()
+                .code("ORDER_FEEDBACK_SUCCESS")
+                .message("Add feedback successfully")
+                .status(HttpStatus.OK)
+                .isSuccess(true)
+                .data(data)
+                .build();
+        return ResponseEntity.ok().body(responseObject);
+    }
+
+    @PostMapping("/re-order")
+    public ResponseEntity<ResponseObject> reOrder(@RequestBody @Valid OrderRequest orderRequest, BindingResult bindingResult) {
+        var response = getResponseObjectResponseEntity(bindingResult);
+        if (response != null){ return response;}
+        var data = orderService.placeOrder(orderRequest);
+        var responseObject = ResponseObject.builder()
+                .code("ORDER_REORDER_SUCCESS")
+                .message("Reorder successfully")
+                .status(HttpStatus.OK)
+                .isSuccess(true)
+                .data(data)
+                .build();
+        return ResponseEntity.ok().body(responseObject);
     }
 
 

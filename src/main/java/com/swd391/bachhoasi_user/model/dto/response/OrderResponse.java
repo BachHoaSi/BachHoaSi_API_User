@@ -30,6 +30,10 @@ public class OrderResponse {
     private String storeName;
     @JsonProperty("store-address")
     private String storeAddress;
+    @JsonProperty("order-feedback")
+    private String orderFeedback;
+    @JsonProperty("delivery-feedback")
+    private String deliveryFeedback;
     @JsonProperty("created-date")
     private Date createdDate;
 
