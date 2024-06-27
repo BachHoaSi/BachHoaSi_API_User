@@ -43,6 +43,7 @@ public class OrderServiceImpl implements OrderService {
         }
         // init new order and order contact
         Order newOrder = Order.builder()
+                .store(store)
                 .orderStatus(OrderStatus.PENDING)
                 .payingMethod(order.getPayingMethod())
                 .createdDate(new Date(System.currentTimeMillis()))
