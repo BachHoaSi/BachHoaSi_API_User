@@ -2,9 +2,12 @@ package com.swd391.bachhoasi_user.service.impl;
 
 import com.swd391.bachhoasi_user.model.constant.CartStatus;
 import com.swd391.bachhoasi_user.model.constant.OrderStatus;
+import com.swd391.bachhoasi_user.model.dto.request.FeedbackRequest;
 import com.swd391.bachhoasi_user.model.dto.request.OrderRequest;
 import com.swd391.bachhoasi_user.model.dto.response.*;
 import com.swd391.bachhoasi_user.model.entity.*;
+import com.swd391.bachhoasi_user.model.exception.ActionFailedException;
+import com.swd391.bachhoasi_user.model.exception.AllNullException;
 import com.swd391.bachhoasi_user.model.exception.NotFoundException;
 import com.swd391.bachhoasi_user.repository.*;
 import com.swd391.bachhoasi_user.service.MenuService;
@@ -104,6 +107,25 @@ public class OrderServiceImpl implements OrderService {
         return new PaginationResponse<>(orderResponses);
     }
 
+    @Override
+    public OrderResponse addFeedback(FeedbackRequest feedbackRequest) {
+
+        if(feedbackRequest.getDeliveryFeedback().isEmpty()&&feedbackRequest.getOrderFeedback().isEmpty()){
+            throw new AllNullException("Feedback is empty");
+        }
+        Store store = storeRepository.findById(feedbackRequest.getStoreId()).orElseThrow(()-> new NotFoundException("Store not found"));
+        Order order = orderRepository.findByIdAndOrderStatusAndOrderContactPhoneNumber(feedbackRequest.getOrderId(),OrderStatus.DELIVERED, store.getPhoneNumber())
+                .orElseThrow(()-> new NotFoundException("Order not found or the order is not delivered!"));
+        order.setOrderFeedback(feedbackRequest.getOrderFeedback());
+        order.setDeliveryFeedback(feedbackRequest.getDeliveryFeedback());
+        try{
+            order = orderRepository.save(order);
+        }catch (Exception e){
+            throw new ActionFailedException("Cannot add feedback!");
+        }
+        return convertOrderToOrderResponse(order);
+    }
+
     public OrderResponse convertOrderToOrderResponse(Order order){
         return OrderResponse.builder()
                 .orderId(order.getId())
@@ -111,6 +133,8 @@ public class OrderServiceImpl implements OrderService {
                 .orderStatus(order.getOrderStatus())
                 .totalPrice(order.getGrandTotal())
                 .storeAddress(order.getOrderContact().getBuildingNumber())
+                .orderFeedback(order.getOrderFeedback())
+                .deliveryFeedback(order.getDeliveryFeedback())
                 .payingMethod(order.getPayingMethod())
                 .point(order.getPoint())
                 .createdDate(order.getCreatedDate())
