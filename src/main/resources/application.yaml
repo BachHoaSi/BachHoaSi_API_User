@@ -58,7 +58,6 @@ zalo:
     end-point:
         oauth2: ${ZALO_OAUTH2_URL:https://oauth.zaloapp.com}
         me: ${ZALO_ME_URL:https://graph.zalo.me}
-    app-id: ${ZALO_APP_ID}
-    client-secret: ${ZALO_CLIENT_SECRET}
-    client-id: ${ZALO_CLIENT_ID}
-    code-verify: ${ZALO_CODE_VERIFY}
+    app-id: ${ZALO_APP_ID:12345}
+    client-secret: ${ZALO_CLIENT_SECRET:123456789}
+    code-verify: ${ZALO_CODE_VERIFY:123456789}
