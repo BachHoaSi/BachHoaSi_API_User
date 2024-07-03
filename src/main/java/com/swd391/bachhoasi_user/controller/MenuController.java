@@ -1,6 +1,5 @@
 package com.swd391.bachhoasi_user.controller;
 
-import com.swd391.bachhoasi_user.model.dto.request.SearchRequestParamsDto;
 import com.swd391.bachhoasi_user.model.dto.response.PaginationResponse;
 import com.swd391.bachhoasi_user.model.dto.response.ProductMenuResponse;
 import com.swd391.bachhoasi_user.model.dto.response.ResponseObject;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.awt.*;
 import java.math.BigDecimal;
 
 @RestController

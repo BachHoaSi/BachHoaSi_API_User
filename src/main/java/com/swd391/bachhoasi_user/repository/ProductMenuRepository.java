@@ -2,6 +2,8 @@ package com.swd391.bachhoasi_user.repository;
 
 import com.swd391.bachhoasi_user.model.entity.Menu;
 import com.swd391.bachhoasi_user.model.entity.ProductMenu;
+import com.swd391.bachhoasi_user.model.entity.ProductMenuId;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-public interface ProductMenuRepository extends BaseBachHoaSiRepository<ProductMenu, BigDecimal>{
+public interface ProductMenuRepository extends BaseBachHoaSiRepository<ProductMenu, ProductMenuId>{
 
 
     @Query("SELECT pm FROM ProductMenu pm " +

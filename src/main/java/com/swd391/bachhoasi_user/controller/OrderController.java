@@ -13,12 +13,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.swd391.bachhoasi_user.controller.CartController.getResponseObjectResponseEntity;
 
