@@ -68,7 +68,7 @@ public class CorsConfig {
     private String[] getCorsAllowed() {
         List<String> corsAllowOrigins = new ArrayList<>();
         corsAllowOrigins.add("http://localhost:3000");
-        corsAllowOrigins.add("https://api.fams.college");
+        corsAllowOrigins.add("https://api-user.fams.college");
         corsAllowOrigins.add("https://oauth.zaloapp.com");
         if (!allowOrigin.equals("null"))
             corsAllowOrigins.add(allowOrigin);
