@@ -1,15 +1,9 @@
 package com.swd391.bachhoasi_user.controller;
 
-import com.swd391.bachhoasi_user.model.constant.CartStatus;
 import com.swd391.bachhoasi_user.model.dto.request.CartDeleteRequest;
 import com.swd391.bachhoasi_user.model.dto.request.CartRequest;
 import com.swd391.bachhoasi_user.model.dto.response.CartResponse;
 import com.swd391.bachhoasi_user.model.dto.response.ResponseObject;
-import com.swd391.bachhoasi_user.model.entity.Cart;
-import com.swd391.bachhoasi_user.model.entity.Store;
-import com.swd391.bachhoasi_user.model.exception.NotFoundException;
-import com.swd391.bachhoasi_user.repository.CartRepository;
-import com.swd391.bachhoasi_user.repository.StoreRepository;
 import com.swd391.bachhoasi_user.service.CartService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +17,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/cart")
@@ -111,7 +105,7 @@ public class CartController {
 
     @DeleteMapping("/delete-cart")
     public ResponseEntity<ResponseObject> deleteCart(@RequestBody @Valid CartDeleteRequest cartRequest, BindingResult bindingResult) {
-        var response = getResponseObjectResponseEntity(bindingResult);
+        var response =  getResponseObjectResponseEntity(bindingResult);
         if (response != null){ return response;}
         var data = cartService.deleteCart(cartRequest.getCartId(), cartRequest.getStoreId());
         var responseObject = ResponseObject.builder()
@@ -124,7 +118,7 @@ public class CartController {
         return ResponseEntity.ok().body(responseObject);
     }
 
-    static ResponseEntity<ResponseObject> getResponseObjectResponseEntity(BindingResult bindingResult) {
+    private ResponseEntity<ResponseObject> getResponseObjectResponseEntity(BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> errors = new ArrayList<>();
             for (FieldError error : bindingResult.getFieldErrors()) {

@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
-import static com.swd391.bachhoasi_user.controller.CartController.getResponseObjectResponseEntity;
+import static com.swd391.bachhoasi_user.util.BaseUtils.getResponseObjectResponseEntity;
+
 
 @RestController
 @AllArgsConstructor

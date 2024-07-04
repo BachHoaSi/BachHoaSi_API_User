@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 @Data
 public class ZaloAccessTokenResponse {
-    @JsonProperty("access_token")
+    @JsonProperty("access-token")
     private String accessToken;
-    @JsonProperty("refresh_token")
+    @JsonProperty("refresh-token")
     private String refreshToken;
-    @JsonProperty("expires_in")
+    @JsonProperty("expires-in")
     private Integer expiresIn;
 }

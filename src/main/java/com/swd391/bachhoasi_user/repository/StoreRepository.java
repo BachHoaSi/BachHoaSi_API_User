@@ -15,6 +15,14 @@ public interface StoreRepository extends JpaRepository<Store, BigDecimal> {
 
     Page<Store> findByNameContainingIgnoreCase(String search, Pageable pageable);
 
+    Optional<Store> findByZaloId(String zaloId);
+
     Optional<Store> findById(BigDecimal id);
+
+    Optional<Store> findByName(String name);
+
+    Optional<Store> findByPhoneNumber(String phoneNumber);
+
+    Boolean existsByPhoneNumber(String phoneNumber);
 
 }
