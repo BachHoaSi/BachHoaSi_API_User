@@ -5,6 +5,7 @@ import com.swd391.bachhoasi_user.model.dto.request.FeedbackRequest;
 import com.swd391.bachhoasi_user.model.dto.request.OrderRequest;
 import com.swd391.bachhoasi_user.model.dto.response.ResponseObject;
 import com.swd391.bachhoasi_user.service.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,7 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    @Operation(summary = "Get orders", description = "Get orders by store id and order status: PENDING, ACCEPTED, PICKED_UP, IN_TRANSIT, DELIVERED, CANCELLED")
     @GetMapping("/orders")
     public ResponseEntity<ResponseObject> getOrders(
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
@@ -59,6 +61,7 @@ public class OrderController {
         return ResponseEntity.ok().body(responseObject);
     }
 
+    @Operation(summary = "Add order", description = "Add order by store id, cart id and payment method: COD, BANKING")
     @PostMapping
     public ResponseEntity<ResponseObject> addOrder(@RequestBody @Valid OrderRequest orderRequest, BindingResult bindingResult) {
         var response = getResponseObjectResponseEntity(bindingResult);
