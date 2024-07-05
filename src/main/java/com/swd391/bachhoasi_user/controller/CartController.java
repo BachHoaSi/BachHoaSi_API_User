@@ -6,7 +6,8 @@ import com.swd391.bachhoasi_user.model.dto.response.CartResponse;
 import com.swd391.bachhoasi_user.model.dto.response.ResponseObject;
 import com.swd391.bachhoasi_user.service.CartService;
 import io.swagger.v3.oas.annotations.Operation;
-
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,9 @@ public class CartController {
 
     @Operation(summary = "Get cart",description = "Get cart by store id")
     @GetMapping()
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200")
+    })
     public ResponseEntity<ResponseObject> getCart(@RequestParam(required = true, name = "storeId") BigDecimal storeId) {
 
 
