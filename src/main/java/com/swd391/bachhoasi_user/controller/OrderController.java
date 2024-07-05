@@ -23,13 +23,13 @@ import static com.swd391.bachhoasi_user.util.BaseUtils.getResponseObjectResponse
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public class OrderController {
 
     private final OrderService orderService;
 
     @Operation(summary = "Get orders", description = "Get orders by store id and order status: PENDING, ACCEPTED, PICKED_UP, IN_TRANSIT, DELIVERED, CANCELLED")
-    @GetMapping("/orders")
+    @GetMapping
     public ResponseEntity<ResponseObject> getOrders(
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
             @RequestParam(required = true, name = "store-id") BigDecimal storeId,
@@ -45,7 +45,7 @@ public class OrderController {
         return ResponseEntity.ok().body(responseObject);
     }
 
-    @GetMapping("/order-details")
+    @GetMapping("/details")
     public ResponseEntity<ResponseObject> getOrderDetails(
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
             @RequestParam(required = true, name = "order-id") BigDecimal orderId
@@ -91,7 +91,7 @@ public class OrderController {
                 .build();
         return ResponseEntity.ok().body(responseObject);
     }
-
+    @Operation(summary = "re-order", description = "Reorder by cart id and store id")
     @PostMapping("/re-order")
     public ResponseEntity<ResponseObject> reOrder(@RequestBody @Valid OrderRequest orderRequest, BindingResult bindingResult) {
         var response = getResponseObjectResponseEntity(bindingResult);

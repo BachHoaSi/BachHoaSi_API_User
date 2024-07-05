@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import com.swd391.bachhoasi_user.model.entity.Admin;
@@ -25,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String zaloId) {
         Store store = storeRepository.findByZaloId(zaloId).orElseThrow(() -> new UsernameNotFoundException("ZaloId did not exist in system, Sign up new store!!!"));
-        return org.springframework.security.core.userdetails.User.withUsername(store.getZaloId())
+        return User.withUsername(store.getZaloId())
                 .password(store.getPhoneNumber())
                 .authorities("STORE")
                 .build();

@@ -24,7 +24,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/carts")
 @RequiredArgsConstructor
 public class CartController {
 
@@ -32,7 +32,7 @@ public class CartController {
 
 
     @Operation(summary = "Get cart",description = "Get cart by store id")
-    @GetMapping("/get-cart")
+    @GetMapping()
     public ResponseEntity<ResponseObject> getCart(@RequestParam(required = true, name = "store-id") BigDecimal storeId) {
 
 
@@ -48,7 +48,7 @@ public class CartController {
         return ResponseEntity.ok().body(responseObject);
     }
     @Operation(summary = "Get cart item",description = "Get cart item by cart id")
-    @GetMapping("/get-cart-item")
+    @GetMapping("/items")
     public ResponseEntity<ResponseObject> getCartItem(
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
             @RequestParam(required = true, name = "cart-id") BigDecimal cartId) {
@@ -64,7 +64,7 @@ public class CartController {
     }
 
     @Operation(summary = "Add to cart",description = "Add item to cart, item-id is product-menu-id")
-    @PostMapping("/add-to-cart")
+    @PostMapping()
     public ResponseEntity<ResponseObject> addToCart(@RequestBody @Valid CartRequest cartRequest, BindingResult bindingResult) {
         var response = getResponseObjectResponseEntity(bindingResult);
         if (response != null){ return response;}
@@ -79,7 +79,7 @@ public class CartController {
         return ResponseEntity.ok().body(responseObject);
     }
     @Operation(summary = "Delete cart item",description = "Delete item from cart, item-id is cart-product-menu-id (id of the cart item, not product id)")
-    @DeleteMapping("/delete-cart-item")
+    @DeleteMapping("/item")
     public ResponseEntity<ResponseObject> deleteCartItem(@RequestBody @Valid CartDeleteRequest cartRequest, BindingResult bindingResult) {
         var response = getResponseObjectResponseEntity(bindingResult);
         if (response != null){ return response;}
@@ -95,7 +95,7 @@ public class CartController {
     }
 
     @Operation(summary = "Update cart item",description = "Update item in cart, item-id is cart-product-menu-id (id of the cart item, not product id)")
-    @PutMapping("update-cart-item")
+    @PutMapping("/item")
     public ResponseEntity<ResponseObject> updateCartItem(@RequestBody @Valid CartRequest cartRequest,BindingResult bindingResult) {
         var response = getResponseObjectResponseEntity(bindingResult);
         if (response != null){ return response;}
@@ -110,7 +110,7 @@ public class CartController {
         return ResponseEntity.ok().body(responseObject);
     }
 
-    @DeleteMapping("/delete-cart")
+    @DeleteMapping()
     public ResponseEntity<ResponseObject> deleteCart(@RequestBody @Valid CartDeleteRequest cartRequest, BindingResult bindingResult) {
         var response =  getResponseObjectResponseEntity(bindingResult);
         if (response != null){ return response;}

@@ -25,7 +25,7 @@ public class StoreController {
     private final StoreService storeService;
 
 
-    @GetMapping("/store-details")
+    @GetMapping("/details")
     public ResponseEntity<ResponseObject> getStoreDetails(@RequestParam BigDecimal id) {
         var storeDetails = storeService.getStoreById(id);
         return ResponseEntity.ok(
@@ -39,7 +39,7 @@ public class StoreController {
         );
     }
 
-    @PutMapping("/update-store")
+    @PutMapping
     public ResponseEntity<ResponseObject> updateStore(@RequestBody @Valid StoreUpdateRequest storeUpdateRequest, BindingResult bindingResult) {
         ResponseEntity<ResponseObject> errors = getResponseObjectResponseEntity(bindingResult);
         if (errors != null) return errors;
