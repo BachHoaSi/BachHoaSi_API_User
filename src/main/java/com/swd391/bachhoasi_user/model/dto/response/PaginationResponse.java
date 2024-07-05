@@ -3,7 +3,6 @@ package com.swd391.bachhoasi_user.model.dto.response;
 import java.util.Collection;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.domain.Page;
 
 import lombok.AllArgsConstructor;
@@ -17,17 +16,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PaginationResponse <T> {
     private List<T> content;
-    @JsonProperty("page-no")
     private Integer pageNo;
-    @JsonProperty("page-size")
     private Integer pageSize;
-    @JsonProperty("total-element")
     private Long totalElement;
-    @JsonProperty("total-page")
     private Integer totalPage;
-    @JsonProperty("is-last-page")
     private Boolean isLastPage;
-    @JsonProperty("is-first-page")
     private Boolean isFirstPage;
 
 

@@ -1,6 +1,5 @@
 package com.swd391.bachhoasi_user.model.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -20,10 +19,8 @@ public class StoreCreateRequest {
     private String location;
     @NotNull(message = "Store phone number should not be null")
     @Pattern(regexp = "\\b(84[35789][0-9]{8})\\b|\\b(0[35789][0-9]{8})\\b", message = "Invalid phone number")
-    @JsonProperty("phone-number")
     private String phoneNumber;
     @NotNull(message = "Store zalo id should not be null")
-    @JsonProperty("zalo-id")
     private String zaloId;
 
 

@@ -33,9 +33,6 @@ jobs:
     runs-on: deploy
     needs: bach-hoa-si-api-user-build
     env:
-      PGA_EMAIL: ${{secrets.PGA_EMAIL}}
-      PGA_PASSWORD: ${{secrets.PGA_PASSWORD}}
-      PGA_PORT: ${{secrets.PGA_PORT}}
 
       DB_PORT: ${{secrets.DB_PORT}}
       DB_USERNAME: ${{secrets.DB_USERNAME}}
