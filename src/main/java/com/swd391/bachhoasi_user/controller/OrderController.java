@@ -32,7 +32,7 @@ public class OrderController {
     @GetMapping
     public ResponseEntity<ResponseObject> getOrders(
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
-            @RequestParam(required = true, name = "store-id") BigDecimal storeId,
+            @RequestParam(required = true, name = "storeId") BigDecimal storeId,
             @RequestParam(required = true, name = "order-status") String orderStatus) {
         var data = orderService.getAllOrders(storeId, OrderStatus.valueOf(orderStatus), pagination);
         var responseObject = ResponseObject.builder()
@@ -48,7 +48,7 @@ public class OrderController {
     @GetMapping("/details")
     public ResponseEntity<ResponseObject> getOrderDetails(
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
-            @RequestParam(required = true, name = "order-id") BigDecimal orderId
+            @RequestParam(required = true, name = "orderId") BigDecimal orderId
     ) {
         var data = orderService.getOrderDetails(orderId, pagination);
         var responseObject = ResponseObject.builder()
