@@ -6,7 +6,7 @@ import com.swd391.bachhoasi_user.model.dto.response.CartResponse;
 import com.swd391.bachhoasi_user.model.dto.response.ResponseObject;
 import com.swd391.bachhoasi_user.service.CartService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

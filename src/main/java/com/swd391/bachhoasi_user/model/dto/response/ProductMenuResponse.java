@@ -13,11 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductMenuResponse {
-
     private BigDecimal id;
     private ProductResponse product;
     private BigDecimal price;
-
-
-
 }

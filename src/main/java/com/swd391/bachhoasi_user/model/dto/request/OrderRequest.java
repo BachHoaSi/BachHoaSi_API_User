@@ -1,6 +1,5 @@
 package com.swd391.bachhoasi_user.model.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.swd391.bachhoasi_user.model.constant.PayingMethod;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -16,12 +15,9 @@ import java.math.BigDecimal;
 public class OrderRequest {
 
     @NotNull(message = "Store id should not be null")
-    @JsonProperty("store-id")
     private BigDecimal storeId;
-    @JsonProperty("cart-id")
     @NotNull(message = "Cart id should not be null")
     private BigDecimal cartId;
-    @JsonProperty("payment-method")
     @NotNull(message = "Payment method should not be null")
     private PayingMethod payingMethod;
 
