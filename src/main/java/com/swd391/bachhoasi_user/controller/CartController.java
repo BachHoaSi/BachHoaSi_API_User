@@ -33,7 +33,7 @@ public class CartController {
 
     @Operation(summary = "Get cart",description = "Get cart by store id")
     @GetMapping()
-    public ResponseEntity<ResponseObject> getCart(@RequestParam(required = true, name = "store-id") BigDecimal storeId) {
+    public ResponseEntity<ResponseObject> getCart(@RequestParam(required = true, name = "storeId") BigDecimal storeId) {
 
 
 
@@ -51,7 +51,7 @@ public class CartController {
     @GetMapping("/items")
     public ResponseEntity<ResponseObject> getCartItem(
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
-            @RequestParam(required = true, name = "cart-id") BigDecimal cartId) {
+            @RequestParam(required = true, name = "cartId") BigDecimal cartId) {
         var data = cartService.getCartItem(cartId, pagination);
         var responseObject = ResponseObject.builder()
                 .code("CART_GET_SUCCESS")
