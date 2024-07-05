@@ -9,9 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 public class LoginDto {
     @NotBlank(message = "Token should not blank")
-    @JsonProperty("zalo-code")
-    private String zaloId;
+
+    private String zaloCode;
     @NotBlank(message = "HashPhone should not blank")
-    @JsonProperty("hash-password")
-    private String hashPhone;
+
+    private String hashPassword;
 }

@@ -15,12 +15,12 @@ import java.sql.Date;
 @NoArgsConstructor
 public class CartResponse {
 
-    @JsonProperty("cart_id")
+
     private BigDecimal cartId;
 
-    @JsonProperty("created-date")
+
     private Date createdDate;
 
-    @JsonProperty("updated-date")
+
     private Date updatedDate;
 }

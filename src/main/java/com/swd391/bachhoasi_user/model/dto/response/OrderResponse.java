@@ -16,25 +16,25 @@ import java.sql.Date;
 @AllArgsConstructor
 public class OrderResponse {
 
-    @JsonProperty("order-id")
+
     private BigDecimal orderId;
-    @JsonProperty("total-price")
+
     private BigDecimal totalPrice;
-    @JsonProperty("Payment-method")
+
     private PayingMethod payingMethod;
-    @JsonProperty("order-status")
+
     private OrderStatus orderStatus;
-    @JsonProperty("point")
+
     private Integer point;
-    @JsonProperty("store-name")
+
     private String storeName;
-    @JsonProperty("store-address")
+
     private String storeAddress;
-    @JsonProperty("order-feedback")
+
     private String orderFeedback;
-    @JsonProperty("delivery-feedback")
+
     private String deliveryFeedback;
-    @JsonProperty("created-date")
+
     private Date createdDate;
 
 }

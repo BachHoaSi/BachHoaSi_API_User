@@ -13,12 +13,12 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class CartDeleteRequest {
 
-    @JsonProperty("item-id")
+
     private BigDecimal itemId;
-    @JsonProperty("cart-id")
+
     @NotNull(message = "Cart id should not be null")
     private BigDecimal cartId;
-    @JsonProperty("store-id")
+
     @NotNull(message = "Store id should not be null")
     private BigDecimal storeId;
 

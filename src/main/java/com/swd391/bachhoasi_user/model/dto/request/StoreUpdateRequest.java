@@ -25,7 +25,7 @@ public class StoreUpdateRequest {
     private String name;
 
     @Pattern(regexp = "\\b(84[35789][0-9]{8})\\b|\\b(0[35789][0-9]{8})\\b", message = "Invalid phone number")
-    @JsonProperty("phone-number")
+
     private String phoneNumber;
 
     private String location;

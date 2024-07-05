@@ -14,19 +14,18 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class ProductResponse {
 
-    @JsonProperty("product-code")
+
     private String productCode;
     private String name;
-    @JsonProperty("base-price")
     private BigDecimal basePrice;
     private String description;
-    @JsonProperty("stock-quantity")
+
     private Integer stockQuantity;
-    @JsonProperty("url-image")
+
     private String urlImage;
-    @JsonProperty("category-code")
+
     private String categoryCode;
-    @JsonProperty("category-name")
+
     private String categoryName;
 
 }

@@ -4,6 +4,7 @@ import com.swd391.bachhoasi_user.model.dto.response.PaginationResponse;
 import com.swd391.bachhoasi_user.model.dto.response.ProductMenuResponse;
 import com.swd391.bachhoasi_user.model.dto.response.ResponseObject;
 import com.swd391.bachhoasi_user.service.MenuService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -25,10 +26,11 @@ public class MenuController {
 
     private final MenuService menuService;
 
+    @Operation(summary = "Get menu",description = "Get menu by store id")
     @GetMapping
     public ResponseEntity<ResponseObject> getMenu(
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
-            @RequestParam(required = true, name = "store-id") BigDecimal storeId) {
+            @RequestParam(required = true, name = "id") BigDecimal storeId) {
 
         PaginationResponse<ProductMenuResponse> menu = menuService.getMenuItemBelongToStore(pagination, storeId);
         var responseObject = ResponseObject.builder()
