@@ -18,9 +18,9 @@ public class CartResponse {
     @JsonProperty("cart_id")
     private BigDecimal cartId;
 
-    @JsonProperty("created_date")
+    @JsonProperty("created-date")
     private Date createdDate;
 
-    @JsonProperty("updated_date")
+    @JsonProperty("updated-date")
     private Date updatedDate;
 }

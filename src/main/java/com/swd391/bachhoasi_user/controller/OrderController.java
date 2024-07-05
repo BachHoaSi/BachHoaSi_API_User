@@ -5,6 +5,7 @@ import com.swd391.bachhoasi_user.model.dto.request.FeedbackRequest;
 import com.swd391.bachhoasi_user.model.dto.request.OrderRequest;
 import com.swd391.bachhoasi_user.model.dto.response.ResponseObject;
 import com.swd391.bachhoasi_user.service.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -17,16 +18,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
-import static com.swd391.bachhoasi_user.controller.CartController.getResponseObjectResponseEntity;
+import static com.swd391.bachhoasi_user.util.BaseUtils.getResponseObjectResponseEntity;
+
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public class OrderController {
 
     private final OrderService orderService;
 
-    @GetMapping("/orders")
+    @Operation(summary = "Get orders", description = "Get orders by store id and order status: PENDING, ACCEPTED, PICKED_UP, IN_TRANSIT, DELIVERED, CANCELLED")
+    @GetMapping
     public ResponseEntity<ResponseObject> getOrders(
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
             @RequestParam(required = true, name = "store-id") BigDecimal storeId,
@@ -42,7 +45,7 @@ public class OrderController {
         return ResponseEntity.ok().body(responseObject);
     }
 
-    @GetMapping("/order-details")
+    @GetMapping("/details")
     public ResponseEntity<ResponseObject> getOrderDetails(
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
             @RequestParam(required = true, name = "order-id") BigDecimal orderId
@@ -58,6 +61,7 @@ public class OrderController {
         return ResponseEntity.ok().body(responseObject);
     }
 
+    @Operation(summary = "Add order", description = "Add order by store id, cart id and payment method: COD, BANKING")
     @PostMapping
     public ResponseEntity<ResponseObject> addOrder(@RequestBody @Valid OrderRequest orderRequest, BindingResult bindingResult) {
         var response = getResponseObjectResponseEntity(bindingResult);
@@ -87,7 +91,7 @@ public class OrderController {
                 .build();
         return ResponseEntity.ok().body(responseObject);
     }
-
+    @Operation(summary = "re-order", description = "Reorder by cart id and store id")
     @PostMapping("/re-order")
     public ResponseEntity<ResponseObject> reOrder(@RequestBody @Valid OrderRequest orderRequest, BindingResult bindingResult) {
         var response = getResponseObjectResponseEntity(bindingResult);

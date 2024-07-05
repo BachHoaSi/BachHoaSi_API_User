@@ -1,16 +1,12 @@
 package com.swd391.bachhoasi_user.controller;
 
-import com.swd391.bachhoasi_user.model.constant.CartStatus;
 import com.swd391.bachhoasi_user.model.dto.request.CartDeleteRequest;
 import com.swd391.bachhoasi_user.model.dto.request.CartRequest;
 import com.swd391.bachhoasi_user.model.dto.response.CartResponse;
 import com.swd391.bachhoasi_user.model.dto.response.ResponseObject;
-import com.swd391.bachhoasi_user.model.entity.Cart;
-import com.swd391.bachhoasi_user.model.entity.Store;
-import com.swd391.bachhoasi_user.model.exception.NotFoundException;
-import com.swd391.bachhoasi_user.repository.CartRepository;
-import com.swd391.bachhoasi_user.repository.StoreRepository;
 import com.swd391.bachhoasi_user.service.CartService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -23,20 +19,23 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/carts")
 @RequiredArgsConstructor
 public class CartController {
 
     private final CartService cartService;
 
 
-    @GetMapping("/get-cart")
+    @Operation(summary = "Get cart",description = "Get cart by store id")
+    @GetMapping()
     public ResponseEntity<ResponseObject> getCart(@RequestParam(required = true, name = "store-id") BigDecimal storeId) {
+
+
 
         CartResponse data = cartService.getCart(storeId);
         var responseObject = ResponseObject.builder()
@@ -48,8 +47,8 @@ public class CartController {
                 .build();
         return ResponseEntity.ok().body(responseObject);
     }
-
-    @GetMapping("/get-cart-item")
+    @Operation(summary = "Get cart item",description = "Get cart item by cart id")
+    @GetMapping("/items")
     public ResponseEntity<ResponseObject> getCartItem(
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
             @RequestParam(required = true, name = "cart-id") BigDecimal cartId) {
@@ -64,7 +63,8 @@ public class CartController {
         return ResponseEntity.ok().body(responseObject);
     }
 
-    @PostMapping("/add-to-cart")
+    @Operation(summary = "Add to cart",description = "Add item to cart, item-id is product-menu-id")
+    @PostMapping()
     public ResponseEntity<ResponseObject> addToCart(@RequestBody @Valid CartRequest cartRequest, BindingResult bindingResult) {
         var response = getResponseObjectResponseEntity(bindingResult);
         if (response != null){ return response;}
@@ -78,8 +78,8 @@ public class CartController {
                 .build();
         return ResponseEntity.ok().body(responseObject);
     }
-
-    @DeleteMapping("/delete-cart-item")
+    @Operation(summary = "Delete cart item",description = "Delete item from cart, item-id is cart-product-menu-id (id of the cart item, not product id)")
+    @DeleteMapping("/item")
     public ResponseEntity<ResponseObject> deleteCartItem(@RequestBody @Valid CartDeleteRequest cartRequest, BindingResult bindingResult) {
         var response = getResponseObjectResponseEntity(bindingResult);
         if (response != null){ return response;}
@@ -94,7 +94,8 @@ public class CartController {
         return ResponseEntity.ok().body(responseObject);
     }
 
-    @PutMapping("update-cart-item")
+    @Operation(summary = "Update cart item",description = "Update item in cart, item-id is cart-product-menu-id (id of the cart item, not product id)")
+    @PutMapping("/item")
     public ResponseEntity<ResponseObject> updateCartItem(@RequestBody @Valid CartRequest cartRequest,BindingResult bindingResult) {
         var response = getResponseObjectResponseEntity(bindingResult);
         if (response != null){ return response;}
@@ -109,9 +110,9 @@ public class CartController {
         return ResponseEntity.ok().body(responseObject);
     }
 
-    @DeleteMapping("/delete-cart")
+    @DeleteMapping()
     public ResponseEntity<ResponseObject> deleteCart(@RequestBody @Valid CartDeleteRequest cartRequest, BindingResult bindingResult) {
-        var response = getResponseObjectResponseEntity(bindingResult);
+        var response =  getResponseObjectResponseEntity(bindingResult);
         if (response != null){ return response;}
         var data = cartService.deleteCart(cartRequest.getCartId(), cartRequest.getStoreId());
         var responseObject = ResponseObject.builder()
@@ -124,7 +125,7 @@ public class CartController {
         return ResponseEntity.ok().body(responseObject);
     }
 
-    static ResponseEntity<ResponseObject> getResponseObjectResponseEntity(BindingResult bindingResult) {
+    private ResponseEntity<ResponseObject> getResponseObjectResponseEntity(BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> errors = new ArrayList<>();
             for (FieldError error : bindingResult.getFieldErrors()) {

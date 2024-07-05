@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
@@ -16,7 +15,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class CartRequest {
 
-    @JsonProperty("cart-product-id")
+    @JsonProperty("item-id")
     private BigDecimal cartProductMenuId;
 
     @NotNull(message = "Store id should not be null")
@@ -27,8 +26,8 @@ public class CartRequest {
     @JsonProperty("cart-id")
     private BigDecimal cartId;
 
-    @NotNull(message = "Item id should not be null")
-    @JsonProperty("item-id")
+    @NotNull(message = "product id should not be null")
+    @JsonProperty("product-id")
     private BigDecimal productId;
 
     @NotNull(message = "Quantity should not be null")

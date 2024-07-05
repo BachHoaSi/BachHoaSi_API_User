@@ -1,8 +1,15 @@
 package com.swd391.bachhoasi_user.util;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import com.swd391.bachhoasi_user.model.dto.response.ResponseObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.swd391.bachhoasi_user.model.exception.ValidationFailedException;
@@ -33,5 +40,23 @@ public class BaseUtils {
             stringBuilder.append(randomDigit);
         }
         return prefix + stringBuilder;
+    }
+    public static ResponseEntity<ResponseObject> getResponseObjectResponseEntity(BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<String> errors = new ArrayList<>();
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errors.add(error.getDefaultMessage());
+            }
+            return ResponseEntity.ok().body(
+                    ResponseObject.builder()
+                            .code("VALIDATION_ERROR")
+                            .data(errors)
+                            .isSuccess(false)
+                            .status(HttpStatus.BAD_REQUEST)
+                            .message("Validation Error")
+                            .build()
+            );
+        }
+        return null;
     }
 }

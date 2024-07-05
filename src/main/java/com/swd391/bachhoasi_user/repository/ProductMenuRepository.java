@@ -1,6 +1,6 @@
 package com.swd391.bachhoasi_user.repository;
 
-import com.swd391.bachhoasi_user.model.entity.Menu;
+
 import com.swd391.bachhoasi_user.model.entity.ProductMenu;
 import com.swd391.bachhoasi_user.model.entity.ProductMenuId;
 
@@ -32,6 +32,3 @@ public interface ProductMenuRepository extends BaseBachHoaSiRepository<ProductMe
             "WHERE p.status = true AND pm.status = true AND pm.id = :subId")
     Optional<ProductMenu> findBySubId(BigDecimal subId);
 }
-
-
-

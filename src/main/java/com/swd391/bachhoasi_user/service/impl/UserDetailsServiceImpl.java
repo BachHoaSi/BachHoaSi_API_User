@@ -1,16 +1,18 @@
 package com.swd391.bachhoasi_user.service.impl;
 
+import com.swd391.bachhoasi_user.model.entity.Store;
+import com.swd391.bachhoasi_user.repository.StoreRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import com.swd391.bachhoasi_user.model.entity.Admin;
-import com.swd391.bachhoasi_user.repository.AdminRepository;
+
 
 import java.util.Collection;
 import java.util.Collections;
@@ -19,12 +21,15 @@ import java.util.Collections;
 @AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final AdminRepository adminRepository;
+    private final StoreRepository storeRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
-        Admin admin = adminRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Wrong username, please check again !!!"));
-        return new User(admin.getUsername(), admin.getHashPassword(), rolesToAuthority(admin));
+    public UserDetails loadUserByUsername(String zaloId) {
+        Store store = storeRepository.findByZaloId(zaloId).orElseThrow(() -> new UsernameNotFoundException("ZaloId did not exist in system, Sign up new store!!!"));
+        return User.withUsername(store.getZaloId())
+                .password(store.getPhoneNumber())
+                .authorities("STORE")
+                .build();
     }
 
     private Collection<GrantedAuthority> rolesToAuthority(Admin user) {

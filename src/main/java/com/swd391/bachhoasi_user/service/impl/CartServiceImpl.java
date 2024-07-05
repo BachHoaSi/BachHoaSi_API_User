@@ -26,7 +26,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -38,10 +37,14 @@ public class CartServiceImpl implements CartService {
     private final ProductMenuRepository productMenuRepository;
 
     private final CartProductMenuRepository cartProductMenuRepository;
+
+
+
     @Override
     public CartProductMenuResponse addToCart(CartRequest cartRequest) {
 
         Store store = storeRepository.findById(cartRequest.getStoreId()).orElseThrow(()-> new NotFoundException("Store not found"));
+
         Cart cart = cartRepository.findByIdAndStoreIdAndCartStatus(cartRequest.getCartId(),cartRequest.getStoreId(),CartStatus.ACTIVE).orElseThrow(()-> new NotFoundException("Cart not found or not active"));
         ProductMenu productMenu = productMenuRepository.findBySubId(cartRequest.getProductId()).orElseThrow(()-> new NotFoundException("Product not found"));
         if(!store.getType().getId().equals(productMenu.getComposeId().getMenu().getStoreType().getId()) || !store.getStoreLevel().getId().equals(productMenu.getComposeId().getMenu().getStoreLevel().getId())){

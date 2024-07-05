@@ -8,12 +8,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+
+
+import static com.swd391.bachhoasi_user.util.BaseUtils.getResponseObjectResponseEntity;
+
 
 @RestController
 @RequestMapping("/store")
@@ -24,7 +25,7 @@ public class StoreController {
     private final StoreService storeService;
 
 
-    @GetMapping("/store-details")
+    @GetMapping("/details")
     public ResponseEntity<ResponseObject> getStoreDetails(@RequestParam BigDecimal id) {
         var storeDetails = storeService.getStoreById(id);
         return ResponseEntity.ok(
@@ -38,9 +39,9 @@ public class StoreController {
         );
     }
 
-    @PutMapping("/update-store")
+    @PutMapping
     public ResponseEntity<ResponseObject> updateStore(@RequestBody @Valid StoreUpdateRequest storeUpdateRequest, BindingResult bindingResult) {
-        ResponseEntity<ResponseObject> errors = CartController.getResponseObjectResponseEntity(bindingResult);
+        ResponseEntity<ResponseObject> errors = getResponseObjectResponseEntity(bindingResult);
         if (errors != null) return errors;
         var storeUpdated = storeService.updateStore(storeUpdateRequest);
         return ResponseEntity.ok(

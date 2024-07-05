@@ -1,6 +1,6 @@
 package com.swd391.bachhoasi_user.model.dto.response;
 
-import com.swd391.bachhoasi_user.model.entity.Product;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
