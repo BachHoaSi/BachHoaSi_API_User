@@ -33,7 +33,7 @@ public class OrderController {
     public ResponseEntity<ResponseObject> getOrders(
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
             @RequestParam(required = true, name = "storeId") BigDecimal storeId,
-            @RequestParam(required = true, name = "order-status") String orderStatus) {
+            @RequestParam(required = true, name = "orderStatus") String orderStatus) {
         var data = orderService.getAllOrders(storeId, OrderStatus.valueOf(orderStatus), pagination);
         var responseObject = ResponseObject.builder()
                 .code("ORDER_GET_SUCCESS")
