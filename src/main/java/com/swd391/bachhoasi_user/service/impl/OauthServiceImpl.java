@@ -38,15 +38,21 @@ public class OauthServiceImpl implements OauthService{
     public LoginResponse oauthLogin(LoginDto loginDto) {
 
         try{
+
+
+
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getZaloId(), loginDto.getHashPhone()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String accessToken = jwtProvider.generateToken(authentication, TokenType.ACCESS_TOKEN);
             String refreshToken = jwtProvider.generateRefreshToken(authentication);
             try {
-                Store store = storeRepository.findByZaloId(SecurityContextHolder.getContext().getAuthentication().getName())
-                        .orElseThrow();
+                Store store = storeRepository.findByZaloIdAndStatus(SecurityContextHolder.getContext().getAuthentication().getName(), true)
+                        .orElseThrow(()->
+                                new AuthFailedException("Your account may be waiting for approve or disable during login, please contact admin for more information"));
                 return new LoginResponse(accessToken, refreshToken, store.getId());
-            }catch (Exception e){
+            }catch (AuthFailedException ex){
+                throw new AuthFailedException(ex.getMessage());
+            } catch (Exception e){
                 throw new AuthFailedException("Your account may have been remove or disable during login");
             }
         }catch (AuthenticationException ex){
@@ -72,6 +78,7 @@ public class OauthServiceImpl implements OauthService{
                 .creationStatus(StoreStatus.PENDING)
                 .createdDate(new Date(System.currentTimeMillis()))
                 .point(0)
+                .status(false)
                 .storeLevel(storeLevel)
                 .build();
         try {

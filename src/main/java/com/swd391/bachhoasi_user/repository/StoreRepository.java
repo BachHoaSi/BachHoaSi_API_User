@@ -1,5 +1,6 @@
 package com.swd391.bachhoasi_user.repository;
 
+import com.swd391.bachhoasi_user.model.constant.StoreStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,6 +17,8 @@ public interface StoreRepository extends JpaRepository<Store, BigDecimal> {
     Page<Store> findByNameContainingIgnoreCase(String search, Pageable pageable);
 
     Optional<Store> findByZaloId(String zaloId);
+
+    Optional<Store> findByZaloIdAndStatus(String zaloId, boolean status);
 
     Optional<Store> findById(BigDecimal id);
 
