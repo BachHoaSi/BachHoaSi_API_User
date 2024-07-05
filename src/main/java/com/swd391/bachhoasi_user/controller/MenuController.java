@@ -28,7 +28,7 @@ public class MenuController {
     @GetMapping
     public ResponseEntity<ResponseObject> getMenu(
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
-            @RequestParam(required = true, name = "store-id") BigDecimal storeId) {
+            @RequestParam(required = true, name = "storeId") BigDecimal storeId) {
 
         PaginationResponse<ProductMenuResponse> menu = menuService.getMenuItemBelongToStore(pagination, storeId);
         var responseObject = ResponseObject.builder()
