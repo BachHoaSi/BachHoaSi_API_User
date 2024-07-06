@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Builder
 @Data
@@ -26,4 +27,9 @@ public class OrderRequest {
     @NotNull(message = "Payment method should not be null")
     @Schema(description = "Payment method for the order", required = true)
     private PayingMethod payingMethod;
+
+    @NotNull(message = "Delivery time is required")
+    @Schema(description = "Time want to delivery!", required = true)
+    private LocalDateTime deliveryTime;
+
 }

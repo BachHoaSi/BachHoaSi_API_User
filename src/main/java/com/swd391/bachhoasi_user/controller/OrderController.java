@@ -61,7 +61,7 @@ public class OrderController {
         return ResponseEntity.ok().body(responseObject);
     }
 
-    @Operation(summary = "Add order", description = "Add order by store id, cart id and payment method: COD, BANKING")
+    @Operation(summary = "Add order", description = "Add order by store id, cart id and payment method: COD, BANKING; Date time format: yyyy-MM-ddTHH:mm:ss")
     @PostMapping
     public ResponseEntity<ResponseObject> addOrder(@RequestBody @Valid OrderRequest orderRequest, BindingResult bindingResult) {
         var response = getResponseObjectResponseEntity(bindingResult);
