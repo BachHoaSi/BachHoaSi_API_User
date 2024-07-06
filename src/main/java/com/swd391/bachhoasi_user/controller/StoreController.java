@@ -3,6 +3,7 @@ package com.swd391.bachhoasi_user.controller;
 import com.swd391.bachhoasi_user.model.dto.request.StoreUpdateRequest;
 import com.swd391.bachhoasi_user.model.dto.response.ResponseObject;
 import com.swd391.bachhoasi_user.service.StoreService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class StoreController {
 
     private final StoreService storeService;
 
-
+    @Operation(summary = "Get store details", description = "Get store details by store id")
     @GetMapping("/details")
     public ResponseEntity<ResponseObject> getStoreDetails(@RequestParam BigDecimal id) {
         var storeDetails = storeService.getStoreById(id);

@@ -38,9 +38,6 @@ public class OauthServiceImpl implements OauthService{
     public LoginResponse oauthLogin(LoginDto loginDto) {
 
         try{
-
-
-
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getZaloId(), loginDto.getHashPhone()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String accessToken = jwtProvider.generateToken(authentication, TokenType.ACCESS_TOKEN);

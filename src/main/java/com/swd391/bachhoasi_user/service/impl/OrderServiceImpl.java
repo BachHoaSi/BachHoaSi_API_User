@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class OrderServiceImpl implements OrderService {
                 .store(store)
                 .orderStatus(OrderStatus.PENDING)
                 .payingMethod(order.getPayingMethod())
+                .orderDate(order.getDeliveryTime())
                 .createdDate(new Date(System.currentTimeMillis()))
                 .updatedDate(new Date(System.currentTimeMillis()))
                 .build();
@@ -131,6 +133,7 @@ public class OrderServiceImpl implements OrderService {
                 .orderId(order.getId())
                 .storeName(order.getOrderContact().getCustomerName())
                 .orderStatus(order.getOrderStatus())
+                .deliveryTime(order.getOrderDate())
                 .totalPrice(order.getGrandTotal())
                 .storeAddress(order.getOrderContact().getBuildingNumber())
                 .orderFeedback(order.getOrderFeedback())

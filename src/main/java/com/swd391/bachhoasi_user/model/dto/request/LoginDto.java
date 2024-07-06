@@ -11,10 +11,10 @@ import lombok.*;
 public class LoginDto {
     
     @NotBlank(message = "Token should not be blank")
-    @Schema(description = "Zalo ID token", required = true, example = "abc12345")
+    @Schema(description = "Zalo token", required = true, example = "abc12345")
     private String zaloId;
     
-    @NotBlank(message = "HashPhone should not be blank")
-    @Schema(description = "Hashed phone number", required = true, example = "hashedphone123")
+    @NotBlank(message = "HashPassword should not be blank")
+    @Schema(description = "Hashed password", required = true, example = "hashedpassword123")
     private String hashPhone;
 }

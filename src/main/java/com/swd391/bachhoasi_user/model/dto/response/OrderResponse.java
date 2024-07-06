@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -26,6 +27,9 @@ public class OrderResponse {
 
     @Schema(description = "Payment method used for the order")
     private PayingMethod payingMethod;
+
+    @Schema(description = "Time when the order will be delivered", example = "2021-12-31T23:59:59.999999999")
+    private LocalDateTime deliveryTime;
 
     @Schema(description = "Status of the order")
     private OrderStatus orderStatus;

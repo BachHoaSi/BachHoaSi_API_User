@@ -28,7 +28,7 @@ public class CartRequest {
     private BigDecimal cartId;
 
     @NotNull(message = "Product id should not be null")
-    @Schema(description = "ID of the product", example = "3456")
+    @Schema(description = "ID of the menu product (not base product)", example = "3456")
     private BigDecimal productId;
 
     @NotNull(message = "Quantity should not be null")
