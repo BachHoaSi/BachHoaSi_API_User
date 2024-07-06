@@ -1,14 +1,18 @@
 package com.swd391.bachhoasi_user.model.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+
 @Data
+@Schema(description = "Response containing Zalo access token details")
 public class ZaloAccessTokenResponse {
-    @JsonProperty("access-token")
+
+    @Schema(description = "Access token for Zalo authentication")
     private String accessToken;
-    @JsonProperty("refresh-token")
+
+    @Schema(description = "Refresh token for obtaining new Zalo access tokens")
     private String refreshToken;
-    @JsonProperty("expires-in")
+
+    @Schema(description = "Time in seconds until the access token expires")
     private Integer expiresIn;
 }

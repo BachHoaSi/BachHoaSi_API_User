@@ -8,14 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import com.swd391.bachhoasi_user.model.dto.response.ResponseObject;
 import com.swd391.bachhoasi_user.service.OauthService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.swd391.bachhoasi_user.util.BaseUtils.getResponseObjectResponseEntity;
 

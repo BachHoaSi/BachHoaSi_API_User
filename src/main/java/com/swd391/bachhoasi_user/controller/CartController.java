@@ -6,7 +6,8 @@ import com.swd391.bachhoasi_user.model.dto.response.CartResponse;
 import com.swd391.bachhoasi_user.model.dto.response.ResponseObject;
 import com.swd391.bachhoasi_user.service.CartService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +34,10 @@ public class CartController {
 
     @Operation(summary = "Get cart",description = "Get cart by store id")
     @GetMapping()
-    public ResponseEntity<ResponseObject> getCart(@RequestParam(required = true, name = "id") BigDecimal storeId) {
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200")
+    })
+    public ResponseEntity<ResponseObject> getCart(@RequestParam(required = true, name = "storeId") BigDecimal storeId) {
 
 
 
@@ -51,7 +55,7 @@ public class CartController {
     @GetMapping("/items")
     public ResponseEntity<ResponseObject> getCartItem(
             @PageableDefault(page = 0, size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pagination,
-            @RequestParam(required = true, name = "id") BigDecimal cartId) {
+            @RequestParam(required = true, name = "cartId") BigDecimal cartId) {
         var data = cartService.getCartItem(cartId, pagination);
         var responseObject = ResponseObject.builder()
                 .code("CART_GET_SUCCESS")
