@@ -72,6 +72,7 @@ public class CorsConfig {
         corsAllowOrigins.add("https://oauth.zaloapp.com");
         corsAllowOrigins.add("https://h5.zdn.vn/");
         corsAllowOrigins.add("zbrowser://h5.zdn.vn/");
+        corsAllowOrigins.add("*");
         if (!allowOrigin.equals("null"))
             corsAllowOrigins.add(allowOrigin);
         return corsAllowOrigins.toArray(new String[0]);
