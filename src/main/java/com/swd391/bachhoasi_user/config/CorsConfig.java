@@ -27,8 +27,8 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry corsRegistry) {
                 corsRegistry.addMapping("/**")
-                        .allowedOrigins(getCorsAllowed())
-                        .allowCredentials(true)
+                        .allowedOrigins("*")
+                        .allowCredentials(false)
                         .allowedHeaders("*")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH")
                         .exposedHeaders("*");
@@ -39,7 +39,7 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(getCorsAllowed()));
+        configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList(
                 "Accept",
@@ -50,7 +50,7 @@ public class CorsConfig {
                 "Content-Type",
                 "Origin",
                 "X-Requested-With"));
-        configuration.setAllowCredentials(true);
+        configuration.setAllowCredentials(false);
         configuration.setExposedHeaders(Arrays.asList(
                 "Accept",
                 "Access-Control-Allow-Headers",
@@ -72,7 +72,6 @@ public class CorsConfig {
         corsAllowOrigins.add("https://oauth.zaloapp.com");
         corsAllowOrigins.add("https://h5.zdn.vn/");
         corsAllowOrigins.add("zbrowser://h5.zdn.vn/");
-        corsAllowOrigins.add("*");
         if (!allowOrigin.equals("null"))
             corsAllowOrigins.add(allowOrigin);
         return corsAllowOrigins.toArray(new String[0]);
