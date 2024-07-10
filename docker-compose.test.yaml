@@ -25,13 +25,9 @@ services:
       ZALO_APP_ID: ${ZALO_APP_ID}
     networks:
       - bachhoasi-networks
-      - nginx_proxy_manager
 
 networks:
   bachhoasi-networks:
-    name: bach-hoa-si-api-test_bachhoasi-networks
-    external: true
-  nginx_proxy_manager:
-    name: nginx_proxy_manager_default
+    name: bachhoasi-networks
     external: true
 
