@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -31,4 +33,8 @@ public class StoreCreateRequest {
     @NotNull(message = "Store zalo id should not be null")
     @Schema(description = "Zalo ID of the store", required = true, example = "zalo12345")
     private String zaloId;
+
+    @NotNull(message = "Store type should not be null")
+    @Schema(description = "Type of the store", required = true, example = "1")
+    private BigDecimal storeTypeId;
 }

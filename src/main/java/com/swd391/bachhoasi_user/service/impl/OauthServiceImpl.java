@@ -6,9 +6,11 @@ import com.swd391.bachhoasi_user.model.dto.request.LoginDto;
 import com.swd391.bachhoasi_user.model.dto.request.StoreCreateRequest;
 import com.swd391.bachhoasi_user.model.entity.Store;
 import com.swd391.bachhoasi_user.model.entity.StoreLevel;
+import com.swd391.bachhoasi_user.model.entity.StoreType;
 import com.swd391.bachhoasi_user.model.exception.ActionFailedException;
 import com.swd391.bachhoasi_user.model.exception.AuthFailedException;
 import com.swd391.bachhoasi_user.repository.StoreLevelRepository;
+import com.swd391.bachhoasi_user.repository.StoreTypeRepository;
 import com.swd391.bachhoasi_user.security.JwtProvider;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,6 +36,7 @@ public class OauthServiceImpl implements OauthService{
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
     private final StoreLevelRepository storeLevelRepository;
+    private final StoreTypeRepository storeTypeRepository;
     @Override
     public LoginResponse oauthLogin(LoginDto loginDto) {
 
@@ -67,6 +70,9 @@ public class OauthServiceImpl implements OauthService{
         }
         StoreLevel storeLevel = storeLevelRepository.findByLevel(1).orElseThrow(()->
                 new ActionFailedException("Cannot assign store level to store, please contact admin for more information"));
+
+        StoreType storeType = storeTypeRepository.findById(createRequest.getStoreTypeId()).orElseThrow(()->
+                new ActionFailedException("Cannot assign store type to store, please contact admin for more information"));
         Store store = Store.builder()
                 .name(createRequest.getName())
                 .location(createRequest.getLocation())
@@ -77,6 +83,7 @@ public class OauthServiceImpl implements OauthService{
                 .point(0)
                 .status(false)
                 .storeLevel(storeLevel)
+                .type(storeType)
                 .build();
         try {
             storeRepository.save(store);

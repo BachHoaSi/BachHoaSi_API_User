@@ -17,7 +17,8 @@ public record ResponseObject(
                 ProductMenuResponse.class,
                 ProductResponse.class,
                 StoreDetailsResponse.class,
-                PaginationResponse.class
+                PaginationResponse.class,
+                StoreTypeResponse.class,
         })
     Object data,
     String code,
