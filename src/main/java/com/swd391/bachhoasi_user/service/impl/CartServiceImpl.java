@@ -19,6 +19,7 @@ import com.swd391.bachhoasi_user.repository.ProductMenuRepository;
 import com.swd391.bachhoasi_user.repository.StoreRepository;
 import com.swd391.bachhoasi_user.service.CartService;
 import com.swd391.bachhoasi_user.service.MenuService;
+import com.swd391.bachhoasi_user.util.AuthUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,7 +36,7 @@ public class CartServiceImpl implements CartService {
     private final StoreRepository storeRepository;
     private final MenuService menuService;
     private final ProductMenuRepository productMenuRepository;
-
+private final AuthUtils authUtils;
     private final CartProductMenuRepository cartProductMenuRepository;
 
 
@@ -110,8 +111,12 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartResponse getCart(BigDecimal storeId) {
 
-        Store store = storeRepository.findById(storeId).orElseThrow(()-> new NotFoundException("Store not found"));
-        Cart cart = cartRepository.findByStoreIdAndCartStatus(storeId, CartStatus.ACTIVE);
+        var currentUser = authUtils.getUserFromAuthentication();
+        if(!currentUser.getId().equals(storeId)){
+            throw new ValidationFailedException("You are not authorized to access this store");
+        }
+        Store store = storeRepository.findById(currentUser.getId()).orElseThrow(() -> new NotFoundException("Store is not found!"));
+        Cart cart = cartRepository.findByStoreIdAndCartStatus(store.getId(), CartStatus.ACTIVE);
 
         if(cart == null) {
             Cart newCart = new Cart();
