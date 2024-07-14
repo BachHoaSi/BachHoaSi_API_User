@@ -8,9 +8,11 @@ import com.swd391.bachhoasi_user.model.entity.*;
 import com.swd391.bachhoasi_user.model.exception.ActionFailedException;
 import com.swd391.bachhoasi_user.model.exception.AllNullException;
 import com.swd391.bachhoasi_user.model.exception.NotFoundException;
+import com.swd391.bachhoasi_user.model.exception.ValidationFailedException;
 import com.swd391.bachhoasi_user.repository.*;
 import com.swd391.bachhoasi_user.service.MenuService;
 import com.swd391.bachhoasi_user.service.OrderService;
+import com.swd391.bachhoasi_user.util.AuthUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,10 +34,16 @@ public class OrderServiceImpl implements OrderService {
     private final OrderProductMenuRepository orderProductMenuRepository;
     private final OrderContactRepository orderContactRepository;
     private final MenuService menuService;
+    private final AuthUtils authUtils;
     @Override
     public OrderResponse placeOrder(OrderRequest order) {
 
-        Store store = storeRepository.findById(order.getStoreId()).orElseThrow(()-> new NotFoundException("Store not found"));
+
+        var currentUser = authUtils.getUserFromAuthentication();
+        if(!currentUser.getId().equals(order.getStoreId())){
+            throw new ValidationFailedException("You are not authorized to access this store");
+        }
+        Store store = storeRepository.findById(currentUser.getId()).orElseThrow(() -> new NotFoundException("Store is not found!"));
 
         List<CartProductMenu> listProductInCart = cartProductMenuRepository.findByCartIdAndCartStoreId(order.getCartId(), order.getStoreId());
         if(listProductInCart.isEmpty()){
@@ -100,7 +108,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public PaginationResponse<OrderResponse> getAllOrders(BigDecimal storeId,OrderStatus orderStatus, Pageable pageable) {
 
-        Store store = storeRepository.findById(storeId).orElseThrow(()-> new NotFoundException("Store not found"));
+        var currentUser = authUtils.getUserFromAuthentication();
+        if(!currentUser.getId().equals(storeId)){
+            throw new ValidationFailedException("You are not authorized to access this store");
+        }
+        Store store = storeRepository.findById(currentUser.getId()).orElseThrow(() -> new NotFoundException("Store is not found!"));
         Page<Order> orders = orderRepository.findByOrderContactPhoneNumberAndOrderStatus(store.getPhoneNumber(), orderStatus, pageable);
         if(orders.isEmpty()){
             throw new NotFoundException("No order found");
@@ -115,7 +127,11 @@ public class OrderServiceImpl implements OrderService {
         if(feedbackRequest.getDeliveryFeedback().isEmpty()&&feedbackRequest.getOrderFeedback().isEmpty()){
             throw new AllNullException("Feedback is empty");
         }
-        Store store = storeRepository.findById(feedbackRequest.getStoreId()).orElseThrow(()-> new NotFoundException("Store not found"));
+        var currentUser = authUtils.getUserFromAuthentication();
+        if(!currentUser.getId().equals(feedbackRequest.getStoreId())){
+            throw new ValidationFailedException("You are not authorized to access this store");
+        }
+        Store store = storeRepository.findById(currentUser.getId()).orElseThrow(() -> new NotFoundException("Store is not found!"));
         Order order = orderRepository.findByIdAndOrderStatusAndOrderContactPhoneNumber(feedbackRequest.getOrderId(),OrderStatus.DELIVERED, store.getPhoneNumber())
                 .orElseThrow(()-> new NotFoundException("Order not found or the order is not delivered!"));
         order.setOrderFeedback(feedbackRequest.getOrderFeedback());
@@ -142,7 +158,8 @@ public class OrderServiceImpl implements OrderService {
                 .point(order.getPoint())
                 .createdDate(order.getCreatedDate())
                 .build();
-    }private OrderProductMenuResponse convertOrderProductMenuToProductMenuResponse(OrderProductMenu orderProductMenu) {
+    }
+    private OrderProductMenuResponse convertOrderProductMenuToProductMenuResponse(OrderProductMenu orderProductMenu) {
 
         ProductMenuResponse productMenuResponse = menuService.convertToProductMenuResponse(orderProductMenu.getProduct());
         OrderProductMenuResponse orderProductMenuResponse = new OrderProductMenuResponse();

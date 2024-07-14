@@ -6,9 +6,11 @@ import com.swd391.bachhoasi_user.model.dto.response.ProductResponse;
 import com.swd391.bachhoasi_user.model.entity.ProductMenu;
 import com.swd391.bachhoasi_user.model.entity.Store;
 import com.swd391.bachhoasi_user.model.exception.NotFoundException;
+import com.swd391.bachhoasi_user.model.exception.ValidationFailedException;
 import com.swd391.bachhoasi_user.repository.ProductMenuRepository;
 import com.swd391.bachhoasi_user.repository.StoreRepository;
 import com.swd391.bachhoasi_user.service.MenuService;
+import com.swd391.bachhoasi_user.util.AuthUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,14 +22,17 @@ import java.math.BigDecimal;
 public class MenuServiceImpl implements MenuService {
 
     private final ProductMenuRepository productMenuRepository;
-
+private final AuthUtils authUtils;
     private final StoreRepository storeRepository;
 
     @Override
     public PaginationResponse<ProductMenuResponse> getMenuItemBelongToStore(Pageable pagination, BigDecimal storeId) {
 
-        Store store = storeRepository.findById(storeId).orElseThrow(() -> new NotFoundException("Store not found"));
-
+        var currentUser = authUtils.getUserFromAuthentication();
+        if(!currentUser.getId().equals(storeId)){
+            throw new ValidationFailedException("You are not authorized to access this store");
+        }
+        Store store = storeRepository.findById(currentUser.getId()).orElseThrow(() -> new NotFoundException("Store is not found!"));
 
         Page<ProductMenu> data = productMenuRepository.findMenusByLevelAndType(
                 store.getStoreLevel().getId(),
