@@ -26,8 +26,6 @@ public class AuthController {
         @RequestBody LoginDto login,
         BindingResult bindingResult
     ){
-        System.out.println(login.getZaloId());
-        System.out.println(login.getHashPhone());
         var response = getResponseObjectResponseEntity(bindingResult);
         if (response != null){ return response;}
         var data = oauthService.oauthLogin(login);
