@@ -1,5 +1,6 @@
 package com.swd391.bachhoasi_user.service.impl;
 
+import com.swd391.bachhoasi_user.model.constant.CartStatus;
 import com.swd391.bachhoasi_user.model.constant.OrderStatus;
 import com.swd391.bachhoasi_user.model.dto.request.FeedbackRequest;
 import com.swd391.bachhoasi_user.model.dto.request.OrderRequest;
@@ -31,6 +32,7 @@ public class OrderServiceImpl implements OrderService {
     private final StoreRepository storeRepository;
     private final OrderRepository orderRepository;
     private final CartProductMenuRepository cartProductMenuRepository;
+    private final CartRepository cartRepository;
     private final OrderProductMenuRepository orderProductMenuRepository;
     private final OrderContactRepository orderContactRepository;
     private final MenuService menuService;
@@ -44,6 +46,8 @@ public class OrderServiceImpl implements OrderService {
             throw new ValidationFailedException("You are not authorized to access this store");
         }
         Store store = storeRepository.findById(currentUser.getId()).orElseThrow(() -> new NotFoundException("Store is not found!"));
+
+        Cart currentCart = cartRepository.findById(order.getCartId()).orElseThrow(() -> new NotFoundException("Cart is not found!"));
 
         List<CartProductMenu> listProductInCart = cartProductMenuRepository.findByCartIdAndCartStoreId(order.getCartId(), order.getStoreId());
         if(listProductInCart.isEmpty()){
@@ -87,11 +91,14 @@ public class OrderServiceImpl implements OrderService {
         int point = (int) (totalPrice * 0.1); // 10% of total price
         newOrder.setPoint(point);
 
+        currentCart.setCartStatus(CartStatus.ORDERED);
+
         try{
             orderContact = orderContactRepository.save(orderContact);
             newOrder.setOrderContact(orderContact);
             newOrder = orderRepository.save(newOrder);
             orderProductMenuRepository.saveAll(orderProducts);
+            cartRepository.save(currentCart);
         }catch (Exception e){
             throw new NotFoundException("Cannot place order");
         }
