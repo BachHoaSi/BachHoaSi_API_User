@@ -51,6 +51,13 @@ private final AuthUtils authUtils;
         if(!store.getType().getId().equals(productMenu.getComposeId().getMenu().getStoreType().getId()) || !store.getStoreLevel().getId().equals(productMenu.getComposeId().getMenu().getStoreLevel().getId())){
             throw new ValidationFailedException("The product is not available in this store");
         }
+
+        CartProductMenu oldProductInCart = cartProductMenuRepository.findByCartIdAndProductId(cart.getId(), productMenu.getId());
+        if(oldProductInCart != null){
+            oldProductInCart.setQuantity(oldProductInCart.getQuantity() + cartRequest.getQuantity());
+            oldProductInCart = cartProductMenuRepository.save(oldProductInCart);
+            return convertCartProductMenuToProductMenuResponse(oldProductInCart);
+        }
         CartProductMenu cartProductMenu = CartProductMenu.builder()
                 .cart(cart)
                 .product(productMenu)
