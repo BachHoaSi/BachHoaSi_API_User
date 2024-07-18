@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 public class MenuServiceImpl implements MenuService {
 
     private final ProductMenuRepository productMenuRepository;
-private final AuthUtils authUtils;
+    private final AuthUtils authUtils;
     private final StoreRepository storeRepository;
 
     @Override
