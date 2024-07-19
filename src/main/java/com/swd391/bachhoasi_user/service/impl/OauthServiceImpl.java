@@ -81,7 +81,7 @@ public class OauthServiceImpl implements OauthService{
                 .creationStatus(StoreStatus.PENDING)
                 .createdDate(new Date(System.currentTimeMillis()))
                 .point(0)
-                .status(false)
+                .status(true)
                 .storeLevel(storeLevel)
                 .type(storeType)
                 .build();
