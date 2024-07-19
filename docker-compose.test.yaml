@@ -23,6 +23,7 @@ services:
       ZALO_CLIENT_SECRET: ${ZALO_CLIENT_SECRET}
       ZALO_CODE_VERIFY: ${ZALO_CODE_VERIFY}
       ZALO_APP_ID: ${ZALO_APP_ID}
+      ZALO_SECRET: ${ZALO_SECRET}
     networks:
       - bachhoasi-networks
 
