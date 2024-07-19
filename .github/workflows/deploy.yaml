@@ -53,6 +53,7 @@ jobs:
       ZALO_CLIENT_SECRET: ${{secrets.ZALO_CLIENT_SECRET}}
       ZALO_CODE_VERIFY: ${{secrets.ZALO_CODE_VERIFY}}
       ZALO_APP_ID: ${{secrets.ZALO_APP_ID}}
+      ZALO_SECRET : ${{secrets.ZALO_PRIVATE_SECRET}}
       
       DOCKER_USERNAME: ${{ secrets.REGISTRY_NAME }}
     steps:
