@@ -34,6 +34,8 @@ public class SecurityConfig {
                 http.csrf(AbstractHttpConfigurer::disable)
                                 .authorizeHttpRequests(authorize -> authorize
                                                 .requestMatchers("/auth/**").permitAll()
+                                                .requestMatchers("/auth/zalo/login").permitAll()
+                                                .requestMatchers("/auth/zalo/signup").permitAll()
                                                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                                                 .requestMatchers("/type/**").permitAll()
                                                 .anyRequest()
