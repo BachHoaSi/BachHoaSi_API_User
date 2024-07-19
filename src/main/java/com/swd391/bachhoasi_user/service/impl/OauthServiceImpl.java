@@ -49,6 +49,9 @@ public class OauthServiceImpl implements OauthService{
                 Store store = storeRepository.findByZaloIdAndStatus(SecurityContextHolder.getContext().getAuthentication().getName(), true)
                         .orElseThrow(()->
                                 new AuthFailedException("Your account may be waiting for approve or disable during login, please contact admin for more information"));
+                if(!store.getCreationStatus().equals(StoreStatus.CREATED ) && !store.getCreationStatus().equals(StoreStatus.ACCEPTED)){
+                    throw new AuthFailedException("Your account is not approved yet, please contact admin for more information");
+                }
                 return new LoginResponse(accessToken, refreshToken, store.getId());
             }catch (AuthFailedException ex){
                 throw new AuthFailedException(ex.getMessage());
